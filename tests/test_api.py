@@ -3,6 +3,7 @@ from app.main import app
 
 client = TestClient(app)
 
+
 def test_check_endpoint():
 
     response = client.post(
@@ -18,3 +19,13 @@ def test_check_endpoint():
 
     assert "verdict" in data
     assert "checks" in data
+    assert "score" in data
+
+
+def test_health_endpoint():
+
+    response = client.get("/health")
+
+    assert response.status_code == 200
+
+    assert response.json()["status"] == "healthy"
