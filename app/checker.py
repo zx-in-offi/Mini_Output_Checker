@@ -1,7 +1,10 @@
+from datetime import datetime
+
 from app.checks.numeric_claims import check_numeric_claims
 from app.checks.citations import check_citations
 from app.checks.contradictions import check_contradictions
 from app.checks.confidence import check_overconfidence
+
 
 def run_checks(text: str):
 
@@ -24,5 +27,6 @@ def run_checks(text: str):
     return {
         "verdict": verdict,
         "score": score,
+        "checked_at": datetime.utcnow().isoformat(),
         "checks": checks
     }

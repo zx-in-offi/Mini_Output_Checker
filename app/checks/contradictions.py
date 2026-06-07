@@ -1,27 +1,32 @@
 def check_contradictions(text: str):
 
-    contradiction_pairs = [
-        ("always", "never"),
+    contradiction_patterns = [
         ("required", "optional"),
-        ("yes", "no"),
-        ("increase", "decrease")
+        ("always", "never"),
+        ("can", "cannot"),
+        ("is", "is not")
     ]
 
-    lower_text = text.lower()
+    sentences = [
+        sentence.strip().lower()
+        for sentence in text.split(".")
+        if sentence.strip()
+    ]
 
-    found_pairs = []
+    found = []
 
-    for a, b in contradiction_pairs:
-        if a in lower_text and b in lower_text:
-            found_pairs.append((a, b))
+    for sentence in sentences:
+        for a, b in contradiction_patterns:
+            if a in sentence and b in sentence:
+                found.append((a, b))
 
-    fired = len(found_pairs) > 0
+    fired = len(found) > 0
 
     return {
         "name": "internal_contradiction",
         "fired": fired,
         "reason": (
-            f"Potential contradiction detected: {found_pairs}"
+            f"Potential contradiction patterns detected: {found}"
             if fired else
             "No contradiction patterns detected."
         ),
