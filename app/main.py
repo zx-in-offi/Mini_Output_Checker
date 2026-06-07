@@ -24,3 +24,9 @@ def root():
 def check_text(data: InputText):
     return run_checks(data.text)
 
+@app.get("/health")
+def health_check():
+    return {
+        "status": "healthy"
+    }
+
